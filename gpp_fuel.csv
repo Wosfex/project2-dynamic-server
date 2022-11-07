@@ -1,0 +1,16 @@
+fuelId, fuel
+1, Hydro
+2, Solar
+3, Gas
+4, Oil
+5, Nuclear
+6, Wind
+7, Coal
+8, Waste
+9, Biomass
+10, Wave and Tidal
+11, Petcoke
+12, Geothermal
+13, Storage
+14, Cogeneration
+15, Other
