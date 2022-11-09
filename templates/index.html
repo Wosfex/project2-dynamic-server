@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cereal</title>
+    <link rel="stylesheet" href="/public/css/foundation.css">
+</head>
+<body>
+    <h1>Powerplant Data</h1>
+    <div id="content">
+        
+        
+        <div class="grid-x grid-padding-x">
+        <label for="fuel">Sort by a Fuel Type:</label>
+            <select class="cell large-auto" name="fuel" id="fuel">
+                <option value="Gas">Gas</option>
+                <option value="Oil">Oil</option>
+                <option value="Coal">Coal</option>
+                <option value="Petcoke">Petcoke</option>
+                <option value="Geothermal">Geothermal</option>
+                <option value="Hydro">Hydro</option>
+                <option value="Nuclear">Nuclear</option>
+            </select>
+        <label for="fuel">Sort by a Location:</label>
+            <select class="cell large-auto" name="fuel" id="fuel">
+                <option value="Gas">Gas</option>
+                <option value="Oil">Oil</option>
+                <option value="Coal">Coal</option>
+                <option value="Petcoke">Petcoke</option>
+                <option value="Geothermal">Geothermal</option>
+                <option value="Hydro">Hydro</option>
+                <option value="Nuclear">Nuclear</option>
+            </select>
+        <label for="fuel">Sort by an Energy Amount:</label>
+            <select class="cell large-auto" name="fuel" id="fuel">
+                <option value="Gas">Gas</option>
+                <option value="Oil">Oil</option>
+                <option value="Coal">Coal</option>
+                <option value="Petcoke">Petcoke</option>
+                <option value="Geothermal">Geothermal</option>
+                <option value="Hydro">Hydro</option>
+                <option value="Nuclear">Nuclear</option>
+            </select>
+        </div>
+        <div class="clear"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="Powerplant_name">Powerplant</th>
+                    <th>Country</th>
+                    <th>Capacity</th>
+                    <th>Output</th>
+                    <th>Fuel Type</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                %%PLANT_INFO%%
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
