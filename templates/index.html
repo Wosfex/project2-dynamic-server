@@ -12,26 +12,24 @@
         
         
         <div class="grid-x grid-padding-x">
-        <label for="fuel">Sort by a Fuel Type:</label>
-            <select class="cell large-auto" name="fuel" id="fuel">
-                <option value="Gas">Gas</option>
-                <option value="Oil">Oil</option>
-                <option value="Coal">Coal</option>
-                <option value="Petcoke">Petcoke</option>
-                <option value="Geothermal">Geothermal</option>
-                <option value="Hydro">Hydro</option>
-                <option value="Nuclear">Nuclear</option>
-            </select>
-        <label for="fuel">Sort by a Location:</label>
-            <select class="cell large-auto" name="fuel" id="fuel">
-                <option value="Gas">Gas</option>
-                <option value="Oil">Oil</option>
-                <option value="Coal">Coal</option>
-                <option value="Petcoke">Petcoke</option>
-                <option value="Geothermal">Geothermal</option>
-                <option value="Hydro">Hydro</option>
-                <option value="Nuclear">Nuclear</option>
-            </select>
+        <div class="dropdown">
+        <button class="dropbtn">Sort by a Fuel Type:</button>
+            <div class="dropdown-content" size="4">
+                <a href="/fuel/Gas">Gas</a>
+                <a href="/fuel/Oil">Oil</a>
+                <a href="/fuel/Coal">Coal</a>
+                <a href="/fuel/Petcoke">Petcoke</a>
+                <a href="/fuel/Geothermal">Geothermal</a>
+                <a href="/fuel/Hydro">Hydro</a>
+                <a href="/fuel/Nuclear">Nuclear</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="dropbtn">Sort by a Location:</button>
+                <div class="dropdown-content">
+                    %%COUNTRY_OPTIONS%%
+                </div>
+            </div>
         <label for="fuel">Sort by an Energy Amount:</label>
             <select class="cell large-auto" name="fuel" id="fuel">
                 <option value="Gas">Gas</option>
