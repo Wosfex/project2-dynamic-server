@@ -36,13 +36,40 @@ app.use(express.static(public_dir));
 
 
 // Example GET request handler for data about a specific year
-app.get('/', (req, res) => {
+app.get('/country/:cid', (req, res) => {
+    let cid = req.params.cid.toUpperCase();
     console.log(req.params.selected_year);
     fs.readFile(path.join(template_dir, 'index.html'), (err, template) => {
         // modify `template` and send response
         // this will require a query to the SQL database
+        let query = 'SELECT plants.name, countries.country, plants.capacity_mw, \
+                    plants.generation_gwh_2015, fuels.fuel, plants.url \
+                    FROM plants INNER JOIN countries ON \
+                    plants.countryId = countries.countryid INNER JOIN fuels ON plants.fuelId = fuels.fuelId WHERE countries.countryid = ?';
 
-        res.status(200).type('html').send(template); // <-- you may need to change this
+        db.all(query, cid, (err, rows) => {
+            // console.log(err);
+            console.log(rows);
+            let response = template.toString();
+            // response = response.replace('%%MANUFACTURER%%', rows[0].mfr);
+            // response = response.replace('%%MFR_ALT_TEXT%%', 'logo for ' + rows[0].mfr);
+            // response = response.replace('%%MFR_IMAGE%%', '/images/' + mfr + '_logo.png');
+            let plant_data = '';
+            for (let i=0; i < rows.length; i++) {
+                plant_data = plant_data + '<tr>';
+                plant_data = plant_data + '<td>' + rows[i].country + '</td>';
+                plant_data = plant_data + '<td>' + rows[i].name + '</td>';
+                plant_data = plant_data + '<td>' + rows[i].capacity_mw + '</td>';
+                plant_data = plant_data + '<td>' + rows[i].generation_gwh_2015 + '</td>';
+                plant_data = plant_data + '<td>' + rows[i].fuel + '</td>';
+                plant_data = plant_data + '<td>' + rows[i].url + '</td>';
+                plant_data = plant_data + '</tr>';
+
+            }
+            response = response.replace('%%PLANT_INFO%%', plant_data);
+                
+            res.status(200).type('html').send(response);
+        });
     });
 });
 

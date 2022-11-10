@@ -1168,7 +1168,7 @@ ul.no-bullet, ol.no-bullet {
       width: calc(100% - 1.875rem); } }
   @media print, screen and (min-width: 64em) {
     .grid-margin-x > .large-auto {
-      width: 50%; }
+      width: auto; }
     .grid-margin-x > .large-shrink {
       width: auto; }
     .grid-margin-x > .large-1 {
