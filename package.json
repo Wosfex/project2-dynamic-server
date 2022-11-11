@@ -3,23 +3,23 @@
     "version": "0.0.0",
     "description": "Dynamic Web Server using Node JS",
     "author": {
-        "name": "Mitchell Covey",
-        "email": "cove4462@stthomas.edu"
+        "name": "Nolan Foy",
+        "email": "foy06497@stthomas.edu"
     },
     "contributors": [
         {
-            "name": "",
-            "email": ""
+            "name": "Mitchell Covey",
+            "email": "cove4462@stthomas.edu"
         },
         {
-            "name": "",
-            "email": ""
+            "name": "Andrew Steichen",
+            "email": "stei7041@stthomas.edu"
         }
     ],
     "main": "server.js",
     "repository": {
         "type": "git",
-        "url": ""
+        "url": "https://github.com/nolanfoy/project2-dynamic-server"
     },
     "dependencies": {
         "express": "^4.18.2",
