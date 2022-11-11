@@ -12,34 +12,41 @@
         
         
         <div class="grid-x grid-padding-x">
-        <div class="dropdown">
-        <button class="dropbtn">Sort by a Fuel Type:</button>
-            <div class="dropdown-content" size="4">
-                <a href="/fuel/Gas">Gas</a>
-                <a href="/fuel/Oil">Oil</a>
-                <a href="/fuel/Coal">Coal</a>
-                <a href="/fuel/Petcoke">Petcoke</a>
-                <a href="/fuel/Geothermal">Geothermal</a>
-                <a href="/fuel/Hydro">Hydro</a>
-                <a href="/fuel/Nuclear">Nuclear</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Sort by a Location:</button>
-                <div class="dropdown-content">
-                    %%COUNTRY_OPTIONS%%
+            <div class="dropdown">
+            <button class="dropbtn">Sort by a Fuel Type</button>
+                <div class="dropdown-content" size="4">
+                    <a href="/fuel/Gas">Gas</a>
+                    <a href="/fuel/Oil">Oil</a>
+                    <a href="/fuel/Coal">Coal</a>
+                    <a href="/fuel/Petcoke">Petcoke</a>
+                    <a href="/fuel/Geothermal">Geothermal</a>
+                    <a href="/fuel/Hydro">Hydro</a>
+                    <a href="/fuel/Nuclear">Nuclear</a>
+                    <a href="/fuel/Solar">Solar</a>
+                    <a href="/fuel/Wind">Wind</a>
+                    <a href="/fuel/Waste">Waste</a>
+                    <a href="/fuel/Biomass">Biomass</a>
+                    <a href="/fuel/Wave and Tidal">Wave and Tidal</a>
+                    <a href="/fuel/Storage">Storage</a>
+                    <a href="/fuel/Cogeneration">Cogeneration</a>
+                    <a href="/fuel/Other">Other</a>
                 </div>
             </div>
-        <label for="fuel">Sort by an Energy Amount:</label>
-            <select class="cell large-auto" name="fuel" id="fuel">
-                <option value="Gas">Gas</option>
-                <option value="Oil">Oil</option>
-                <option value="Coal">Coal</option>
-                <option value="Petcoke">Petcoke</option>
-                <option value="Geothermal">Geothermal</option>
-                <option value="Hydro">Hydro</option>
-                <option value="Nuclear">Nuclear</option>
-            </select>
+            <div class="dropdown">
+                <button class="dropbtn">Sort by a Country</button>
+                    <div class="dropdown-content">
+                        %%COUNTRY_OPTIONS%%
+                    </div>
+                </div>
+                <p id="capacity-text">Sort by a Capacity Greater Than:</p>
+                <input type="text" placeholder="Capacity" id="cap-entry"/>
+                <input type="submit" id="sub-button" onclick="redirect()">
+                <script>
+                    function redirect() {
+                        let cap = '/capacity/'+document.getElementById('cap-entry').value;
+                        window.location.href=cap;
+                    }
+                </script>
         </div>
         <div class="clear"></div>
         <table>
@@ -48,7 +55,13 @@
                     <th class="Powerplant_name">Powerplant</th>
                     <th>Country</th>
                     <th>Capacity</th>
-                    <th>Output</th>
+                    <th>Generation Gwh 2013</th>
+                    <th>Generation Gwh 2014</th>
+                    <th>Generation Gwh 2015</th>
+                    <th>Generation Gwh 2016</th>
+                    <th>Generation Gwh 2017</th>
+                    <th>Generation Gwh 2018</th>
+                    <th>Generation Gwh 2019</th>
                     <th>Fuel Type</th>
                     <th>URL</th>
                 </tr>

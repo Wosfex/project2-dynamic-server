@@ -57,6 +57,37 @@
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #728f9b;}
 
+#cap-entry {
+  width: 120px;
+  background-color: #6e94ee;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 25px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 25px;
+  min-height: 50px;
+}
+
+#capacity-text {
+  background-color: #6e94ee;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 0px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 0px;
+  max-height: 50px;
+}
+
+#sub-button {
+  border-radius: 25px;
+  max-height: 50px;
+}
 
 html {
   line-height: 1.15;
