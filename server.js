@@ -108,36 +108,39 @@ app.get('/country/:cid', (req, res) => {
                 total_capacity[rows[i].fuelId] = total_capacity[rows[i].fuelId] + rows[i].capacity_mw;
                 
             }
-            let total_capacity_data = 
-            "['Hydro', " + total_capacity[0] + "]," +
-            "['Solar', " + total_capacity[1] + "]," +
-            "['Gas', " + total_capacity[2] + "]," +
-            "['Oil', " + total_capacity[3] + "]," +
-            "['Nuclear', " + total_capacity[4] + "]," +
-            "['Wind', " + total_capacity[5] + "]," +
-            "['Coal', " + total_capacity[6] + "]," +
-            "['Waste', " + total_capacity[7] + "]," +
-            "['Biomass', " + total_capacity[8] + "]," +
-            "['Wave and Tidal', " + total_capacity[9] + "]," +
-            "['Petcoke', " + total_capacity[10] + "]," +
-            "['Geothermal', " + total_capacity[11] + "]," +
-            "['Storage', " + total_capacity[12] + "]," +
-            "['Cogeneration', " + total_capacity[13] + "]," +
-            "['Other', " + total_capacity[14] + "]";
-            response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
-            response = response.replace('"%%HEIGHT%%"', 500);
-            response = response.replace('%%PLANT_INFO%%', plant_data);
-            response = response.replace('%%SYMBOL_ALT%%', 'filler image');
-            response = response.replace('%%SYMBOL%%', '/images/blank.png');
+
             //Fills country options in dropdown
             if(rows.length<=0){
-                res.status(404).send('404 error sent - Query not found');
+                res.status(404).send('404 error sent - ' + req.params['cid'] + ' not found');
             }else{
                 db.all(fillQuery, (err, rows) => {
                     for (let i=0; i < rows.length-1; i++) {
                         fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
                     }
                     response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
+                    let total_capacity_data = 
+                    "['Hydro', " + total_capacity[0] + "]," +
+                    "['Solar', " + total_capacity[1] + "]," +
+                    "['Gas', " + total_capacity[2] + "]," +
+                    "['Oil', " + total_capacity[3] + "]," +
+                    "['Nuclear', " + total_capacity[4] + "]," +
+                    "['Wind', " + total_capacity[5] + "]," +
+                    "['Coal', " + total_capacity[6] + "]," +
+                    "['Waste', " + total_capacity[7] + "]," +
+                    "['Biomass', " + total_capacity[8] + "]," +
+                    "['Wave and Tidal', " + total_capacity[9] + "]," +
+                    "['Petcoke', " + total_capacity[10] + "]," +
+                    "['Geothermal', " + total_capacity[11] + "]," +
+                    "['Storage', " + total_capacity[12] + "]," +
+                    "['Cogeneration', " + total_capacity[13] + "]," +
+                    "['Other', " + total_capacity[14] + "]";
+                    response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
+                    response = response.replace('"%%HEIGHT%%"', 500);
+                    response = response.replace('%%PLANT_INFO%%', plant_data);
+                    response = response.replace('%%SYMBOL_ALT%%', 'filler image');
+                    response = response.replace('%%SYMBOL%%', '/images/blank.png');
+
+
                     // This makes the buttons appear.
                     response = response.replaceAll('hidden', '');
                     res.status(200).type('html').send(response);
@@ -230,21 +233,21 @@ app.get('/fuel/:fid', (req, res) => {
                 total_capacity = total_capacity + rows[i].capacity_mw;
 
             }
-            let total_capacity_data = "['" + rows[0].fuel + "', " + total_capacity + "]";
-            response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
-            response = response.replace('"%%HEIGHT%%"', 500);
-            response = response.replace('%%PLANT_INFO%%', plant_data);
-            
-            response = response.replace('%%SYMBOL_ALT%%', 'symbol for ' + rows[0].fuel);
-            response = response.replace('%%SYMBOL%%', '/images/' + rows[0].fuelId + '_energy.png');
             //Fills country options in dropdown
             if(rows.length<=0){
-                res.status(404).send('404 error sent - Query not found');
+                res.status(404).send('404 error sent - ' + req.params['fid'] + ' not found');
             }else{
                 db.all(fillQuery, (err, rows) => {
                     for (let i=0; i < rows.length-1; i++) {
                         fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
                     }
+                    let total_capacity_data = "['" + rows[0].fuel + "', " + total_capacity + "]";
+                    response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
+                    response = response.replace('"%%HEIGHT%%"', 500);
+                    response = response.replace('%%PLANT_INFO%%', plant_data);
+                    
+                    response = response.replace('%%SYMBOL_ALT%%', 'symbol for ' + rows[0].fuel);
+                    response = response.replace('%%SYMBOL%%', '/images/' + rows[0].fuelId + '_energy.png');
                     response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
                     // This makes the buttons appear
                     response = response.replaceAll('hidden', '');
@@ -324,35 +327,37 @@ app.get('/capacity/:cap', (req, res) => {
                 total_capacity[rows[i].fuelId] = total_capacity[rows[i].fuelId] + rows[i].capacity_mw;
 
             }
-            let total_capacity_data = 
-            "['Hydro', " + total_capacity[0] + "]," +
-            "['Solar', " + total_capacity[1] + "]," +
-            "['Gas', " + total_capacity[2] + "]," +
-            "['Oil', " + total_capacity[3] + "]," +
-            "['Nuclear', " + total_capacity[4] + "]," +
-            "['Wind', " + total_capacity[5] + "]," +
-            "['Coal', " + total_capacity[6] + "]," +
-            "['Waste', " + total_capacity[7] + "]," +
-            "['Biomass', " + total_capacity[8] + "]," +
-            "['Wave and Tidal', " + total_capacity[9] + "]," +
-            "['Petcoke', " + total_capacity[10] + "]," +
-            "['Geothermal', " + total_capacity[11] + "]," +
-            "['Storage', " + total_capacity[12] + "]," +
-            "['Cogeneration', " + total_capacity[13] + "]," +
-            "['Other', " + total_capacity[14] + "]";
-            response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
-            response = response.replace('"%%HEIGHT%%"', 500);
-            response = response.replace('%%PLANT_INFO%%', plant_data);
-            response = response.replace('%%SYMBOL_ALT%%', 'filler image');
-            response = response.replace('%%SYMBOL%%', '/images/blank.png');
             //Fills country options in dropdown
             if(rows.length<=0){
-                res.status(404).send('404 error sent - Query not found');
+                res.status(404).send('404 error sent - ' + req.params['cap'] + ' not found');
             }else{
                 db.all(fillQuery, (err, rows) => {
                     for (let i=0; i < rows.length-1; i++) {
                         fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
                     }
+
+                    let total_capacity_data = 
+                    "['Hydro', " + total_capacity[0] + "]," +
+                    "['Solar', " + total_capacity[1] + "]," +
+                    "['Gas', " + total_capacity[2] + "]," +
+                    "['Oil', " + total_capacity[3] + "]," +
+                    "['Nuclear', " + total_capacity[4] + "]," +
+                    "['Wind', " + total_capacity[5] + "]," +
+                    "['Coal', " + total_capacity[6] + "]," +
+                    "['Waste', " + total_capacity[7] + "]," +
+                    "['Biomass', " + total_capacity[8] + "]," +
+                    "['Wave and Tidal', " + total_capacity[9] + "]," +
+                    "['Petcoke', " + total_capacity[10] + "]," +
+                    "['Geothermal', " + total_capacity[11] + "]," +
+                    "['Storage', " + total_capacity[12] + "]," +
+                    "['Cogeneration', " + total_capacity[13] + "]," +
+                    "['Other', " + total_capacity[14] + "]";
+                    response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
+                    response = response.replace('"%%HEIGHT%%"', 500);
+                    response = response.replace('%%PLANT_INFO%%', plant_data);
+                    response = response.replace('%%SYMBOL_ALT%%', 'filler image');
+                    response = response.replace('%%SYMBOL%%', '/images/blank.png');
+
                     response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
                     res.status(200).type('html').send(response);
                     
@@ -369,10 +374,12 @@ app.get('/capacity/:cap', (req, res) => {
 // or localhost:####/capacity/
 app.get('/*$', (req, res) => {
     fs.readFile(path.join(template_dir, 'index.html'), (err, template) => {
+        console.log(req.params[0]);
+        console.log("TEST");
         let fillQuery = 'SELECT countryid FROM countries';
         let fillData = '';
         let response = template.toString();
-        response = response.replace('%%PLANT_INFO%%', '404 error sent, bad request');
+        response = response.replace('%%PLANT_INFO%%', "/" + req.params[0] + " is a bad request");
         db.all(fillQuery, (err, rows) => {
             for (let i=0; i < rows.length-1; i++) {
                 fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
