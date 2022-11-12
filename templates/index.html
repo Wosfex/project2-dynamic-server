@@ -3,8 +3,38 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Powerplant Data</title>
+	<title>Powerplants</title>
     <link rel="stylesheet" href="/css/foundation.css">
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawStuff);
+
+      function drawStuff() {
+        var data = new google.visualization.arrayToDataTable([
+            ['Total capacity', 'Fuel type'],
+            "%%TOTAL_CAPACITY%%"
+        ]);
+
+        var options = {
+          title: 'Total capacity by fuel type',
+          height: "%%HEIGHT%%",
+          legend: { position: 'none' },
+          chart: { title: 'Total capacity by fuel type'},
+          bars: 'horizontal', // Required for Material Bar Charts.
+          axes: {
+            x: {
+              0: { side: 'top', label: 'Total capacity in MW'} // Top x-axis.
+            }
+          },
+          bar: { groupWidth: "90%" }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+        chart.draw(data, options);
+      };
+    </script>
 </head>
 <body>
     <h1>Powerplant Data</h1>
@@ -178,11 +208,12 @@
                     }else{
                         newUrl = '/404' // TODO put 404 link here
                     }
-                    window.location.href = newUrl;
                 }
-            </script>                               
+                </script>
         </div>
         <div class="clear"></div>
+        <div id="top_x_div" width></div>
+        <div class="'clear"></div>
         <table>
             <thead>
                 <tr>
