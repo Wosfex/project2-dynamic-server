@@ -374,8 +374,6 @@ app.get('/capacity/:cap', (req, res) => {
 // or localhost:####/capacity/
 app.get('/*$', (req, res) => {
     fs.readFile(path.join(template_dir, 'index.html'), (err, template) => {
-        console.log(req.params[0]);
-        console.log("TEST");
         let fillQuery = 'SELECT countryid FROM countries';
         let fillData = '';
         let response = template.toString();
