@@ -84,6 +84,11 @@
   max-height: 50px;
 }
 
+#symbol {
+  width: 75px;
+  height: 75px;
+}
+
 #sub-button {
   border-radius: 25px;
   max-height: 50px;

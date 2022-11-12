@@ -127,6 +127,8 @@ app.get('/country/:cid', (req, res) => {
             response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data);
             response = response.replace('%%HEIGHT%%', 500);
             response = response.replace('%%PLANT_INFO%%', plant_data);
+            response = response.replace('%%SYMBOL_ALT%%', 'filler image');
+            response = response.replace('%%SYMBOL%%', '/images/blank.png');
             //Fills country options in dropdown
             db.all(fillQuery, (err, rows) => {
                 for (let i=0; i < rows.length-1; i++) {
@@ -156,7 +158,7 @@ app.get('/fuel/:fid', (req, res) => {
         // this will require a query to the SQL database
         let query = 'SELECT plants.name, countries.country, plants.capacity_mw, plants.generation_gwh_2013,\
                     plants.generation_gwh_2014, plants.generation_gwh_2015, plants.generation_gwh_2016, plants.generation_gwh_2017, \
-                    plants.generation_gwh_2018, plants.generation_gwh_2019, fuels.fuel, plants.url \
+                    plants.generation_gwh_2018, plants.generation_gwh_2019, fuels.fuel, plants.url, plants.fuelId \
                     FROM plants INNER JOIN countries ON \
                     plants.countryId = countries.countryid INNER JOIN fuels ON plants.fuelId = fuels.fuelId WHERE fuels.fuel = ?';
         let response = template.toString();
@@ -207,6 +209,7 @@ app.get('/fuel/:fid', (req, res) => {
                 } else {
                     plant_data = plant_data + '<td>' + rows[i].generation_gwh_2019.toFixed(2) + '</td>';
                 }
+
                 plant_data = plant_data + '<td>' + rows[i].fuel + '</td>';
                 plant_data = plant_data + '<td><a href="' + rows[i].url + '" target="_blank">link</a></td>';
                 plant_data = plant_data + '</tr>';
@@ -218,6 +221,10 @@ app.get('/fuel/:fid', (req, res) => {
             response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data); 
             response = response.replace('%%HEIGHT%%', 200);
             response = response.replace('%%PLANT_INFO%%', plant_data);
+            
+            response = response.replace('%%SYMBOL_ALT%%', 'symbol for ' + rows[0].fuel);
+            response = response.replace('%%SYMBOL%%', '/images/' + rows[0].fuelId + '_energy.png');
+            console.log(rows[0].fuelId);
             //Fills country options in dropdown
             db.all(fillQuery, (err, rows) => {
                 for (let i=0; i < rows.length-1; i++) {
@@ -318,6 +325,8 @@ app.get('/capacity/:cap', (req, res) => {
             response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data);
             response = response.replace('%%HEIGHT%%', 500);
             response = response.replace('%%PLANT_INFO%%', plant_data);
+            response = response.replace('%%SYMBOL_ALT%%', 'filler image');
+            response = response.replace('%%SYMBOL%%', '/images/blank.png');
             //Fills country options in dropdown
             db.all(fillQuery, (err, rows) => {
                 for (let i=0; i < rows.length-1; i++) {
