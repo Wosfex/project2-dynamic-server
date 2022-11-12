@@ -45,7 +45,7 @@ app.get('/country/:cid', (req, res) => {
     fs.readFile(path.join(template_dir, 'index.html'), (err, template) => {
         // modify `template` and send response
         // this will require a query to the SQL database
-        let query = 'SELECT plants.name, countries.country, plants.capacity_mw, plants.generation_gwh_2013,\
+        let query = 'SELECT plants.name, countries.country, plants.capacity_mw, plants.fuelId, plants.generation_gwh_2013,\
                     plants.generation_gwh_2014, plants.generation_gwh_2015, plants.generation_gwh_2016, plants.generation_gwh_2017, \
                     plants.generation_gwh_2018, plants.generation_gwh_2019, fuels.fuel, plants.url \
                     FROM plants INNER JOIN countries ON \
@@ -56,6 +56,10 @@ app.get('/country/:cid', (req, res) => {
 
         db.all(query, cid, (err, rows) => {
             let plant_data = '';
+            let total_capacity = [];
+            for (let i=0; i < 15; i++) {
+                total_capacity[i] = 0;
+            }
             for (let i=0; i < rows.length; i++) {
                 plant_data = plant_data + '<tr>';
                 plant_data = plant_data + '<td>' + rows[i].name + '</td>';
@@ -100,9 +104,28 @@ app.get('/country/:cid', (req, res) => {
                 plant_data = plant_data + '<td>' + rows[i].fuel + '</td>';
                 plant_data = plant_data + '<td><a href="' + rows[i].url + '" target="_blank">link</a></td>';
                 plant_data = plant_data + '</tr>';
-                
 
+                total_capacity[rows[i].fuelId] = total_capacity[rows[i].fuelId] + rows[i].capacity_mw;
+                
             }
+            let total_capacity_data = 
+            "['Hydro', " + total_capacity[0] + "]," +
+            "['Solar', " + total_capacity[1] + "]," +
+            "['Gas', " + total_capacity[2] + "]," +
+            "['Oil', " + total_capacity[3] + "]," +
+            "['Nuclear', " + total_capacity[4] + "]," +
+            "['Wind', " + total_capacity[5] + "]," +
+            "['Coal', " + total_capacity[6] + "]," +
+            "['Waste', " + total_capacity[7] + "]," +
+            "['Biomass', " + total_capacity[8] + "]," +
+            "['Wave and Tidal', " + total_capacity[9] + "]," +
+            "['Petcoke', " + total_capacity[10] + "]," +
+            "['Geothermal', " + total_capacity[11] + "]," +
+            "['Storage', " + total_capacity[12] + "]," +
+            "['Cogeneration', " + total_capacity[13] + "]," +
+            "['Other', " + total_capacity[14] + "]";
+            response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data);
+            response = response.replace('%%HEIGHT%%', 500);
             response = response.replace('%%PLANT_INFO%%', plant_data);
             //Fills country options in dropdown
             db.all(fillQuery, (err, rows) => {
@@ -142,6 +165,7 @@ app.get('/fuel/:fid', (req, res) => {
 
         db.all(query, fid, (err, rows) => {
             let plant_data = '';
+            let total_capacity = 0;
             for (let i=0; i < rows.length; i++) {
                 plant_data = plant_data + '<tr>';
                 plant_data = plant_data + '<td>' + rows[i].name + '</td>';
@@ -187,7 +211,12 @@ app.get('/fuel/:fid', (req, res) => {
                 plant_data = plant_data + '<td><a href="' + rows[i].url + '" target="_blank">link</a></td>';
                 plant_data = plant_data + '</tr>';
 
+                total_capacity = total_capacity + rows[i].capacity_mw;
+
             }
+            let total_capacity_data = "['" + rows[0].fuel + "', " + total_capacity + "]";
+            response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data); 
+            response = response.replace('%%HEIGHT%%', 200);
             response = response.replace('%%PLANT_INFO%%', plant_data);
             //Fills country options in dropdown
             db.all(fillQuery, (err, rows) => {
@@ -208,7 +237,7 @@ app.get('/fuel/:fid', (req, res) => {
 app.get('/capacity/:cap', (req, res) => {
     let cap = req.params.cap;
     fs.readFile(path.join(template_dir, 'index.html'), (err, template) => {
-        let query = 'SELECT plants.name, countries.country, plants.capacity_mw, plants.generation_gwh_2013,\
+        let query = 'SELECT plants.name, countries.country, plants.capacity_mw, plants.fuelId, plants.generation_gwh_2013,\
                     plants.generation_gwh_2014, plants.generation_gwh_2015, plants.generation_gwh_2016, plants.generation_gwh_2017, \
                     plants.generation_gwh_2018, plants.generation_gwh_2019, fuels.fuel, plants.url \
                     FROM plants INNER JOIN countries ON \
@@ -216,9 +245,12 @@ app.get('/capacity/:cap', (req, res) => {
         let response = template.toString();
         let fillQuery = 'SELECT countryid FROM countries';
         let fillData = '';
-
+        let total_capacity = [];
         db.all(query, cap, (err, rows) => {
             let plant_data = '';
+            for (let i=0; i < 15; i++) {
+                total_capacity[i] = 0;
+            }
             for (let i=0; i < rows.length; i++) {
                 plant_data = plant_data + '<tr>';
                 plant_data = plant_data + '<td>' + rows[i].name + '</td>';
@@ -264,7 +296,27 @@ app.get('/capacity/:cap', (req, res) => {
                 plant_data = plant_data + '<td><a href="' + rows[i].url + '" target="_blank">link</a></td>';
                 plant_data = plant_data + '</tr>';
 
+                total_capacity[rows[i].fuelId] = total_capacity[rows[i].fuelId] + rows[i].capacity_mw;
+
             }
+            let total_capacity_data = 
+            "['Hydro', " + total_capacity[0] + "]," +
+            "['Solar', " + total_capacity[1] + "]," +
+            "['Gas', " + total_capacity[2] + "]," +
+            "['Oil', " + total_capacity[3] + "]," +
+            "['Nuclear', " + total_capacity[4] + "]," +
+            "['Wind', " + total_capacity[5] + "]," +
+            "['Coal', " + total_capacity[6] + "]," +
+            "['Waste', " + total_capacity[7] + "]," +
+            "['Biomass', " + total_capacity[8] + "]," +
+            "['Wave and Tidal', " + total_capacity[9] + "]," +
+            "['Petcoke', " + total_capacity[10] + "]," +
+            "['Geothermal', " + total_capacity[11] + "]," +
+            "['Storage', " + total_capacity[12] + "]," +
+            "['Cogeneration', " + total_capacity[13] + "]," +
+            "['Other', " + total_capacity[14] + "]";
+            response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data);
+            response = response.replace('%%HEIGHT%%', 500);
             response = response.replace('%%PLANT_INFO%%', plant_data);
             //Fills country options in dropdown
             db.all(fillQuery, (err, rows) => {
