@@ -33,7 +33,7 @@ app.use(express.static(public_dir));
 
 // GET request handler for home page '/' (redirect to desired route)
 app.get('/', (req, res) => {
-    let home = '/country/USA'; // <-- change this
+    let home = '/country/ALB'; // <-- change this
     res.redirect(home);
    
 })
@@ -105,14 +105,20 @@ app.get('/country/:cid', (req, res) => {
             }
             response = response.replace('%%PLANT_INFO%%', plant_data);
             //Fills country options in dropdown
-            db.all(fillQuery, (err, rows) => {
-                for (let i=0; i < rows.length-1; i++) {
-                    fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
-                }
-                response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
-                res.status(200).type('html').send(response);
-                
-            });
+            if(rows.length<=0){
+                res.status(404).send('404 error sent - Query not found');
+            }else{
+                db.all(fillQuery, (err, rows) => {
+                    for (let i=0; i < rows.length-1; i++) {
+                        fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
+                    }
+                    response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
+                    // This makes the buttons appear.
+                    response = response.replaceAll('hidden', '');
+                    res.status(200).type('html').send(response);
+                    
+                });
+            }
             
             
 
@@ -143,6 +149,13 @@ app.get('/fuel/:fid', (req, res) => {
         db.all(query, fid, (err, rows) => {
             let plant_data = '';
             for (let i=0; i < rows.length; i++) {
+
+                // // fuel test for building the list of fuel types for button
+                // if(!fuelTestArr.includes(rows[i].fuel)){
+                //     fuelTestArr.push(rows[i].fuel);
+                //     fuelTestStr = fuelTestStr + rows[i].fuel;
+                // }
+
                 plant_data = plant_data + '<tr>';
                 plant_data = plant_data + '<td>' + rows[i].name + '</td>';
                 plant_data = plant_data + '<td>' + rows[i].country + '</td>';
@@ -190,14 +203,20 @@ app.get('/fuel/:fid', (req, res) => {
             }
             response = response.replace('%%PLANT_INFO%%', plant_data);
             //Fills country options in dropdown
-            db.all(fillQuery, (err, rows) => {
-                for (let i=0; i < rows.length-1; i++) {
-                    fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
-                }
-                response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
-                res.status(200).type('html').send(response);
-                
-            });
+            if(rows.length<=0){
+                res.status(404).send('404 error sent - Query not found');
+            }else{
+                db.all(fillQuery, (err, rows) => {
+                    for (let i=0; i < rows.length-1; i++) {
+                        fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
+                    }
+                    response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
+                    // This makes the buttons appear
+                    response = response.replaceAll('hidden', '');
+                    res.status(200).type('html').send(response);
+                    
+                });
+            }
                 
             
         });
@@ -267,20 +286,42 @@ app.get('/capacity/:cap', (req, res) => {
             }
             response = response.replace('%%PLANT_INFO%%', plant_data);
             //Fills country options in dropdown
-            db.all(fillQuery, (err, rows) => {
-                for (let i=0; i < rows.length-1; i++) {
-                    fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
-                }
-                response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
-                res.status(200).type('html').send(response);
-                
-            });
+            if(rows.length<=0){
+                res.status(404).send('404 error sent - Query not found');
+            }else{
+                db.all(fillQuery, (err, rows) => {
+                    for (let i=0; i < rows.length-1; i++) {
+                        fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
+                    }
+                    response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
+                    res.status(200).type('html').send(response);
+                    
+                });
+            }   
                 
             
         });
     });
 });
 
+
+// // 404 error handling for anything that is not localhost:####/country/, localhost:####/fuel/, 
+// or localhost:####/capacity/
+app.get('/*$', (req, res) => {
+    fs.readFile(path.join(template_dir, 'index.html'), (err, template) => {
+        let fillQuery = 'SELECT countryid FROM countries';
+        let fillData = '';
+        let response = template.toString();
+        response = response.replace('%%PLANT_INFO%%', '404 error sent, bad request');
+        db.all(fillQuery, (err, rows) => {
+            for (let i=0; i < rows.length-1; i++) {
+                fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
+            }
+            response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
+            res.status(404).send(response);
+        });
+    });
+});
 
 app.listen(port, () => {
     console.log('Now listening on port ' + port);
