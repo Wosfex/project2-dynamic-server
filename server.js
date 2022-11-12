@@ -124,8 +124,8 @@ app.get('/country/:cid', (req, res) => {
             "['Storage', " + total_capacity[12] + "]," +
             "['Cogeneration', " + total_capacity[13] + "]," +
             "['Other', " + total_capacity[14] + "]";
-            response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data);
-            response = response.replace('%%HEIGHT%%', 500);
+            response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
+            response = response.replace('"%%HEIGHT%%"', 500);
             response = response.replace('%%PLANT_INFO%%', plant_data);
             response = response.replace('%%SYMBOL_ALT%%', 'filler image');
             response = response.replace('%%SYMBOL%%', '/images/blank.png');
@@ -231,13 +231,12 @@ app.get('/fuel/:fid', (req, res) => {
 
             }
             let total_capacity_data = "['" + rows[0].fuel + "', " + total_capacity + "]";
-            response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data); 
-            response = response.replace('%%HEIGHT%%', 200);
+            response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
+            response = response.replace('"%%HEIGHT%%"', 500);
             response = response.replace('%%PLANT_INFO%%', plant_data);
             
             response = response.replace('%%SYMBOL_ALT%%', 'symbol for ' + rows[0].fuel);
             response = response.replace('%%SYMBOL%%', '/images/' + rows[0].fuelId + '_energy.png');
-            console.log(rows[0].fuelId);
             //Fills country options in dropdown
             if(rows.length<=0){
                 res.status(404).send('404 error sent - Query not found');
@@ -341,8 +340,8 @@ app.get('/capacity/:cap', (req, res) => {
             "['Storage', " + total_capacity[12] + "]," +
             "['Cogeneration', " + total_capacity[13] + "]," +
             "['Other', " + total_capacity[14] + "]";
-            response = response.replace('%%TOTAL_CAPACITY%%', total_capacity_data);
-            response = response.replace('%%HEIGHT%%', 500);
+            response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
+            response = response.replace('"%%HEIGHT%%"', 500);
             response = response.replace('%%PLANT_INFO%%', plant_data);
             response = response.replace('%%SYMBOL_ALT%%', 'filler image');
             response = response.replace('%%SYMBOL%%', '/images/blank.png');

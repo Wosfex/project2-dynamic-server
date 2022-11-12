@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Powerplants</title>
+	<title>PowerPlants</title>
     <link rel="stylesheet" href="/css/foundation.css">
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -79,9 +79,9 @@
             </script>
 
             <!-- Back Button -->
-            <button type="button" hidden class ="dropbtn" id="sub-button" onclick="reDirBack()"> Previous </button>
+            <button type="button" hidden class ="dropbtn" id="sub-button" onclick="PREV()"> Previous </button>
             <script>
-                function reDirBack() {
+                function PREV() {
                     // Basically looks at the url to determine fuel or country, then will loop -1 or +1
                     let loc = window.location.href;
                     let splitEr = loc.split('/');
@@ -146,15 +146,14 @@
             </script>  
 
             <!-- Forwards Button -->
-            <button type="button" hidden class ="dropbtn" id="sub-button" onclick="reDirFor()">Next</button>
+            <button type="button" hidden class ="dropbtn" id="sub-button" onclick="NEXT()">Next</button>
             <script>
-                function reDirFor() {
+                function NEXT() {
                     // Basically looks at the url to determine fuel or country, then will loop -1 or +1
                     let loc = window.location.href;
                     let splitEr = loc.split('/');
                     let urlType = splitEr[3];
                     let newUrl = ''
-
                     // Correctly identifying the two types
                     if( urlType == "fuel"){
                         var gasList = ["Gas","Oil","Coal","Petcoke","Geothermal","Hydro","Nuclear","Solar","Wind","Waste","Biomass",
@@ -208,6 +207,7 @@
                     }else{
                         newUrl = '/404' // TODO put 404 link here
                     }
+                    window.location.href = newUrl;
                 }
                 </script>
         </div>
