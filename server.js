@@ -108,8 +108,7 @@ app.get('/country/:cid', (req, res) => {
                 total_capacity[rows[i].fuelId] = total_capacity[rows[i].fuelId] + rows[i].capacity_mw;
                 
             }
-            response = response.replace('%%SYMBOL_ALT%%', 'filler image');
-            response = response.replace('%%SYMBOL%%', '/images/blank.png');
+            
             //Fills country options in dropdown
             if(rows.length<=0){
                 res.status(404).send('404 error sent - ' + req.params['cid'] + ' not found');
@@ -138,7 +137,8 @@ app.get('/country/:cid', (req, res) => {
                     response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
                     response = response.replace('"%%HEIGHT%%"', 500);
                     response = response.replace('%%PLANT_INFO%%', plant_data);
-                    
+                    response = response.replace('%%SYMBOL_ALT%%', 'filler image');
+                    response = response.replace('%%SYMBOL%%', '/images/blank.png');
 
 
                     // This makes the buttons appear.
@@ -234,20 +234,23 @@ app.get('/fuel/:fid', (req, res) => {
 
             }
 
-            response = response.replace('%%SYMBOL_ALT%%', 'symbol for ' + rows[0].fuel);
-            response = response.replace('%%SYMBOL%%', '/images/' + rows[0].fuelId + '_energy.png');
+           
             //Fills country options in dropdown
             if(rows.length<=0){
                 res.status(404).send('404 error sent - ' + req.params['fid'] + ' not found');
             }else{
-                db.all(fillQuery, (err, rows) => {
-                    for (let i=0; i < rows.length-1; i++) {
-                        fillData = fillData + '<a href="/country/'+rows[i].countryid+'">'+rows[i].countryid+'</a>';
+                db.all(fillQuery, (err, fillrows) => {
+                    for (let i=0; i < fillrows.length-1; i++) {
+                        fillData = fillData + '<a href="/country/'+fillrows[i].countryid+'">'+fillrows[i].countryid+'</a>';
                     }
-                    let total_capacity_data = "['" + rows[0].fuel + "', " + total_capacity + "]";
+                    let total_capacity_data = "['" + fillrows[0].fuel + "', " + total_capacity + "]";
+                    
                     response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
                     response = response.replace('"%%HEIGHT%%"', 500);
                     response = response.replace('%%PLANT_INFO%%', plant_data);
+                    
+                    response = response.replace('%%SYMBOL_ALT%%', 'symbol for ' + rows[0].fuel);
+                    response = response.replace('%%SYMBOL%%', '/images/' + rows[0].fuelId + '_energy.png');
                     
                     response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
                     // This makes the buttons appear
@@ -328,8 +331,7 @@ app.get('/capacity/:cap', (req, res) => {
                 total_capacity[rows[i].fuelId] = total_capacity[rows[i].fuelId] + rows[i].capacity_mw;
 
             }
-            response = response.replace('%%SYMBOL_ALT%%', 'filler image');
-            response = response.replace('%%SYMBOL%%', '/images/blank.png');
+            
             //Fills country options in dropdown
             if(rows.length<=0){
                 res.status(404).send('404 error sent - ' + req.params['cap'] + ' not found');
@@ -358,7 +360,8 @@ app.get('/capacity/:cap', (req, res) => {
                     response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
                     response = response.replace('"%%HEIGHT%%"', 500);
                     response = response.replace('%%PLANT_INFO%%', plant_data);
-                    
+                    response = response.replace('%%SYMBOL_ALT%%', 'filler image');
+                    response = response.replace('%%SYMBOL%%', '/images/blank.png');
 
                     response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
                     res.status(200).type('html').send(response);
