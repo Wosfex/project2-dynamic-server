@@ -57,7 +57,7 @@ app.get('/country/:cid', (req, res) => {
         db.all(query, cid, (err, rows) => {
             let plant_data = '';
             let total_capacity = [];
-            for (let i=0; i < 15; i++) {
+            for (let i=0; i < 16; i++) {
                 total_capacity[i] = 0;
             }
             for (let i=0; i < rows.length; i++) {
@@ -119,21 +119,21 @@ app.get('/country/:cid', (req, res) => {
                     }
                     response = response.replace('%%COUNTRY_OPTIONS%%', fillData);
                     let total_capacity_data = 
-                    "['Hydro', " + total_capacity[0] + "]," +
-                    "['Solar', " + total_capacity[1] + "]," +
-                    "['Gas', " + total_capacity[2] + "]," +
-                    "['Oil', " + total_capacity[3] + "]," +
-                    "['Nuclear', " + total_capacity[4] + "]," +
-                    "['Wind', " + total_capacity[5] + "]," +
-                    "['Coal', " + total_capacity[6] + "]," +
-                    "['Waste', " + total_capacity[7] + "]," +
-                    "['Biomass', " + total_capacity[8] + "]," +
-                    "['Wave and Tidal', " + total_capacity[9] + "]," +
-                    "['Petcoke', " + total_capacity[10] + "]," +
-                    "['Geothermal', " + total_capacity[11] + "]," +
-                    "['Storage', " + total_capacity[12] + "]," +
-                    "['Cogeneration', " + total_capacity[13] + "]," +
-                    "['Other', " + total_capacity[14] + "]";
+                    "['Hydro', " + total_capacity[1] + "]," +
+                    "['Solar', " + total_capacity[2] + "]," +
+                    "['Gas', " + total_capacity[3] + "]," +
+                    "['Oil', " + total_capacity[4] + "]," +
+                    "['Nuclear', " + total_capacity[5] + "]," +
+                    "['Wind', " + total_capacity[6] + "]," +
+                    "['Coal', " + total_capacity[7] + "]," +
+                    "['Waste', " + total_capacity[8] + "]," +
+                    "['Biomass', " + total_capacity[9] + "]," +
+                    "['Wave and Tidal', " + total_capacity[10] + "]," +
+                    "['Petcoke', " + total_capacity[11] + "]," +
+                    "['Geothermal', " + total_capacity[12] + "]," +
+                    "['Storage', " + total_capacity[13] + "]," +
+                    "['Cogeneration', " + total_capacity[14] + "]," +
+                    "['Other', " + total_capacity[15] + "]";
                     response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
                     response = response.replace('"%%HEIGHT%%"', 500);
                     response = response.replace('%%PLANT_INFO%%', plant_data);
@@ -246,7 +246,7 @@ app.get('/fuel/:fid', (req, res) => {
                     let total_capacity_data = "['" + fillrows[0].fuel + "', " + total_capacity + "]";
                     
                     response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
-                    response = response.replace('"%%HEIGHT%%"', 500);
+                    response = response.replace('"%%HEIGHT%%"', 200);
                     response = response.replace('%%PLANT_INFO%%', plant_data);
                     
                     response = response.replace('%%SYMBOL_ALT%%', 'symbol for ' + rows[0].fuel);
@@ -280,7 +280,7 @@ app.get('/capacity/:cap', (req, res) => {
         let total_capacity = [];
         db.all(query, cap, (err, rows) => {
             let plant_data = '';
-            for (let i=0; i < 15; i++) {
+            for (let i=0; i < 16; i++) {
                 total_capacity[i] = 0;
             }
             for (let i=0; i < rows.length; i++) {
@@ -342,21 +342,21 @@ app.get('/capacity/:cap', (req, res) => {
                     }
 
                     let total_capacity_data = 
-                    "['Hydro', " + total_capacity[0] + "]," +
-                    "['Solar', " + total_capacity[1] + "]," +
-                    "['Gas', " + total_capacity[2] + "]," +
-                    "['Oil', " + total_capacity[3] + "]," +
-                    "['Nuclear', " + total_capacity[4] + "]," +
-                    "['Wind', " + total_capacity[5] + "]," +
-                    "['Coal', " + total_capacity[6] + "]," +
-                    "['Waste', " + total_capacity[7] + "]," +
-                    "['Biomass', " + total_capacity[8] + "]," +
-                    "['Wave and Tidal', " + total_capacity[9] + "]," +
-                    "['Petcoke', " + total_capacity[10] + "]," +
-                    "['Geothermal', " + total_capacity[11] + "]," +
-                    "['Storage', " + total_capacity[12] + "]," +
-                    "['Cogeneration', " + total_capacity[13] + "]," +
-                    "['Other', " + total_capacity[14] + "]";
+                    "['Hydro', " + total_capacity[1] + "]," +
+                    "['Solar', " + total_capacity[2] + "]," +
+                    "['Gas', " + total_capacity[3] + "]," +
+                    "['Oil', " + total_capacity[4] + "]," +
+                    "['Nuclear', " + total_capacity[5] + "]," +
+                    "['Wind', " + total_capacity[6] + "]," +
+                    "['Coal', " + total_capacity[7] + "]," +
+                    "['Waste', " + total_capacity[8] + "]," +
+                    "['Biomass', " + total_capacity[9] + "]," +
+                    "['Wave and Tidal', " + total_capacity[10] + "]," +
+                    "['Petcoke', " + total_capacity[11] + "]," +
+                    "['Geothermal', " + total_capacity[12] + "]," +
+                    "['Storage', " + total_capacity[13] + "]," +
+                    "['Cogeneration', " + total_capacity[14] + "]," +
+                    "['Other', " + total_capacity[15] + "]";
                     response = response.replace('"%%TOTAL_CAPACITY%%"', total_capacity_data);
                     response = response.replace('"%%HEIGHT%%"', 500);
                     response = response.replace('%%PLANT_INFO%%', plant_data);
